@@ -1,0 +1,132 @@
+/* "Each person does their own part": the still phone. Everything is scoped under .tour (and .hero-phone, the same phone on its own in the hero).
+   The phone sits still while its screen changes as the steps pass. Its screen is 1080 x 2340, the shape of the app screenshots: each .tour-screen holds one
+   screenshot (an img, 720 x 1560) and carries data-shot with its name. A small "Sample data" tab sits on the phone's top edge, outside the screen.
+   Base (works without GSAP, under "reduce motion", and with scripting off): js/tour.js picks the active step and sets classes; screens swap by class.
+   Flashy layer (.tour--rich, added by js/tour.js only with GSAP + ScrollTrigger and motion allowed): transform and opacity only. No inline styles in the markup. */
+
+/* the counter's rail is a mix of the text colour into the ground */
+.tour { --rail: color-mix(in srgb, var(--color-ink) 22%, var(--color-paper)); }
+
+/* geometry. Phones and tablets (held upright): the phone is the top of an opaque band that sticks under the nav pill, about half the screen tall, and the steps scroll beneath it.
+   --band-h is the band's height, so a step's text can stick just under it. */
+.tour { --bezel: var(--space-xs); --stick-top: 84px; --chips-h: 28px; --chips-block: calc(var(--chips-h) + var(--space-xs)); --count-h: 24px; --text-room: 208px; --ph: calc(max(200px, min(52svh, 100svh - var(--bar-h) - var(--text-room) - var(--stick-top) - var(--chips-block) - var(--space-xs) - var(--count-h) - var(--space-sm))) - 2 * var(--bezel)); --step-h: 66svh;
+  --band-h: calc(var(--stick-top) + var(--chips-block) + var(--ph) + 2 * var(--bezel) + var(--space-xs) + var(--count-h) + var(--space-sm)); --text-top: calc(var(--band-h) + var(--space-xs)); }
+.hero-phone { --bezel: var(--space-xs); --ph: min(500px, calc((100vw - 2 * var(--gutter) - 2 * var(--bezel)) / 0.46154)); } /* 500px tall, or narrower if the screen (a 200% zoom) cannot hold that width */
+.tour .tour-top { padding-top: var(--space-2xl); }
+
+/* the pinned side: role chips, the phone, the counter */
+.tour-side { position: sticky; top: var(--stick-top); z-index: var(--z-sticky); display: flex; flex-direction: column; align-items: center; gap: var(--space-xs); margin-top: var(--stick-top); padding: 0 0 var(--space-sm); background: var(--color-paper); border-bottom: var(--rule-hair) solid var(--color-rule); }
+.tour-side::before { content: ""; position: absolute; inset: auto 0 100%; height: var(--stick-top); background: var(--color-paper); } /* the strip above the stuck band, around the floating pill, is paper too, so the steps never show beside the pill */
+.tour-chips { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px var(--space-2xs); } /* when the row wraps (a narrow screen, a large font) the rows are 44px apart, so each chip keeps its whole hit area */
+.tour-chip { position: relative; z-index: 1; text-decoration: none; padding: var(--space-3xs) var(--space-xs); border: var(--rule-hair) solid var(--color-rule-2); border-radius: 4px; background: transparent; color: var(--color-muted); font-size: var(--text-xs); font-weight: 500; line-height: 1.4; white-space: nowrap; transition: color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
+.tour-chip.is-on { background: var(--color-accent-soft); border-color: var(--color-accent); color: var(--color-ink); }
+.tour-chip::after { content: ""; position: absolute; inset: -11px -3px; } /* the chip's hit area is 44px high; the chip itself looks as before */
+.tour-chip:hover { color: var(--color-ink); border-color: var(--color-ink-2); }
+.tour-chip:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 3px; }
+.tour-phone { position: relative; box-sizing: content-box; flex: none; width: calc(var(--ph) * 0.46154); height: var(--ph); border: var(--bezel) solid var(--color-rule-2); border-radius: calc(var(--bezel) * 4); background: var(--color-paper); }
+.tour-phone.is-live { will-change: transform; }
+.tour--rich .tour-side .tour-phone { z-index: 2; } /* the lifted phone is in front of the counter below it */
+.tour--rich .tour-side { perspective: 1600px; } /* the 3D runway (js/tour.js): the perspective is on the column, so the phone itself only carries transform */
+.tour-count { display: flex; align-items: center; gap: var(--space-sm); width: calc(var(--ph) * 0.46154 + 2 * var(--bezel)); min-height: var(--count-h); color: var(--color-muted); font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.tour-num { display: inline-grid; overflow: hidden; vertical-align: top; color: var(--color-ink); }
+.tour-num > span { grid-area: 1 / 1; }
+.tour-rail { position: relative; overflow: hidden; flex: 1 1 0; height: 2px; background: var(--rail); }
+.tour-rail i { position: absolute; inset: 0; background: var(--color-accent); transform: scaleX(0); transform-origin: 0 50%; }
+.tour-rail::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, transparent 0 calc(100% / var(--n, 8) - 2px), var(--color-paper) calc(100% / var(--n, 8) - 2px) calc(100% / var(--n, 8))); }
+.tour-pill { position: absolute; left: 0; top: 0; z-index: 0; border-radius: 4px; background: var(--color-accent-soft); transform-origin: 0 0; pointer-events: none; }
+.tour--rich .tour-chip.is-on { background: transparent; }
+
+/* phone screens. A screen is shown by class; with motion the screens are pushed like the screens of an app: the next one comes in from the right over the one leaving, which drifts 30% left
+   beneath it, and scrolling back up mirrors it (the screen leaving slides off to the right, over the one coming back from the left). Both stay opaque and the phone never dims.
+   The classes carry the direction: a screen after the active one waits on the right, one before it sits off to the left (.is-before), and .tour-view clips the push to the phone's screen.
+   Stacking: waiting on the right (2) over the active one (1) over the one off to the left (0), so the screen that is travelling is always the one on top, in both directions. */
+.tour-view { position: absolute; inset: 0; overflow: hidden; border-radius: calc(var(--bezel) * 3); }
+.tour-screen { position: absolute; inset: 0; display: none; background: linear-gradient(var(--color-app-edge), var(--color-app-edge)) 11.3% 4.1% / 38% 1.5% no-repeat, linear-gradient(var(--color-app-edge), var(--color-app-edge)) 50% 10.6% / 86% 15% no-repeat, linear-gradient(var(--color-app-edge), var(--color-app-edge)) 50% 30.3% / 86% 11% no-repeat, linear-gradient(var(--color-app-edge), var(--color-app-edge)) 50% 56.9% / 86% 28% no-repeat, var(--color-app-ground); } /* a screen whose picture is late shows the app's own light ground with a faint outline of its cards, no text: it reads as loading, never as a black hole */
+.tour-screen.is-active { display: block; }
+.tour-screen img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+/* the tab: a small gold label lying on the phone's top bezel, a few px of it above the frame, like the tab on the owner's board. It is on the frame, never on a screen. */
+.tour-tab { position: absolute; left: 0; right: 0; bottom: 100%; z-index: var(--z-raised); width: max-content; margin: 0 auto; padding: 0 var(--space-xs); border-radius: var(--radius-pill) var(--radius-pill) 0 0; background: var(--color-accent); color: var(--color-accent-ink); font-size: 0.75rem; font-weight: 500; line-height: 14px; white-space: nowrap; pointer-events: none; }
+/* step 6 holds three screens stacked (the start, the scanner, the result). At rest, and with no script or "reduce motion", only the result shows; js/tour.js plays the other two once, on a forward arrival. */
+.tour-seq img { position: absolute; inset: 0; }
+.tour-seq .seq { display: none; }
+
+/* the "in use" layer (built by js/tour.js, only with motion): a soft cool-blue highlight on what the step describes, gold tap rings where a person would tap, and the scanner's sweep.
+   Positions are fractions of the screen (--x, --y centre; --w, --h size), so they follow any phone size. Transform and opacity only; hidden at rest. It sits on the screen and is clipped by .tour-view. */
+.tour-use { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.use-hit { position: absolute; left: calc((var(--x) - var(--w) / 2) * 100%); top: calc((var(--y) - var(--h) / 2) * 100%); width: calc(var(--w) * 100%); height: calc(var(--h) * 100%); border: 2px solid var(--color-cool); border-radius: 8px; background: color-mix(in oklab, var(--color-cool) 16%, transparent); opacity: 0; }
+.use-tap { position: absolute; left: calc(var(--x) * 100%); top: calc(var(--y) * 100%); width: 16%; aspect-ratio: 1; margin: -8% 0 0 -8%; border: 3px solid var(--color-accent); border-radius: 50%; background: color-mix(in oklab, var(--color-accent) 22%, transparent); opacity: 0; }
+.use-vf { position: absolute; left: calc(var(--x0) * 100%); top: calc(var(--y0) * 100%); width: calc((var(--x1) - var(--x0)) * 100%); height: calc((var(--y1) - var(--y0)) * 100%); overflow: hidden; }
+.use-line { position: absolute; inset: 0; border-bottom: 2px solid var(--color-cool); background: linear-gradient(to bottom, transparent, color-mix(in oklab, var(--color-cool) 26%, transparent)); opacity: 0; }
+
+.js .tour-screen { display: block; z-index: 2; visibility: hidden; transform: translateX(100%); transition: transform var(--dur-long) var(--ease-out), visibility 0s linear var(--dur-long); }
+.js .tour-screen.is-before { z-index: 0; transform: translateX(-30%); }
+.js .tour-screen.is-active { z-index: 1; visibility: visible; transform: none; transition: transform var(--dur-long) var(--ease-out), visibility 0s; }
+
+
+/* the steps: one block each; on phones a step's text sticks just under the band while its block passes, so the active step is always the one below the phone */
+.tour-steps { margin: 0; padding: 0; list-style: none; }
+.tour-step { min-height: var(--step-h); }
+.tour-text { position: sticky; top: var(--text-top); padding-block: var(--space-md); }
+.tour-label { display: flex; align-items: baseline; gap: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-sm); font-weight: 500; }
+.tour-step.is-active .tour-label { color: var(--color-accent); }
+.tour-step h3 { max-width: 22ch; margin-top: var(--space-xs); font-size: var(--text-xl); line-height: 1.15; }
+.tour-copy { max-width: 46ch; margin-top: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-md); line-height: 1.5; }
+.tour--rich .tour-text { transition: opacity var(--dur-long) var(--ease-out); }
+.tour--rich .tour-step:not(.is-active) .tour-text { opacity: 0.64; }
+
+/* the feature lines after the steps */
+.tour .tour-more { padding-block: var(--space-xl) var(--space-2xl); }
+
+/* a narrow screen: the four chips wrap into two rows (2 x 24px and the 20px between them), so the band is that much taller */
+@media (max-width: 24rem) { .tour { --chips-h: 68px; } }
+
+/* phones under 900px tall: the chips go, so the phone stays big and the step text keeps its room under it */
+@media (max-width: 63.99rem) and (max-height: 56.25rem) {
+  .tour { --chips-h: 0px; --chips-block: 0px; }
+  .tour-chips { display: none; }
+}
+
+/* a short screen under 64rem wide has no room for a band above the text.
+   Held sideways (landscape) it gets the laptop's layout, small: the steps on the left and the phone sticking beside them, sized to the room between the nav pill (above) and the phone bar (below),
+   and never wider than 34% of the screen (its frame included). The step whose text shows most in that room is the lit one (js/tour.js), so a text that is whole there is always the one the phone shows.
+   Upright (200% zoom, or a large system font, which widens rem inside a media query) the phone sits in the flow above the steps, the way it did before, so no text is ever under it. */
+@media (max-width: 63.99rem) and (max-height: 32.5rem) and (orientation: landscape) {
+  .tour { --stick-top: 82px; --ph: min(max(120px, calc(100svh - var(--stick-top) - var(--bar-h) - var(--count-h) - 2 * var(--bezel) - 2 * var(--space-xs))), calc((34vw - 2 * var(--bezel)) / 0.46154)); --step-h: 72svh; }
+  .tour-grid { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--gap-columns); align-items: start; }
+  .tour-steps { grid-column: 1; grid-row: 1; }
+  .tour-side { grid-column: 2; grid-row: 1; margin-top: 0; padding: 0; background: none; border-bottom: 0; }
+  .tour-side::before { display: none; }
+  .tour-count { min-width: 8.5rem; } /* wide enough for the number and a rail, though the phone is narrow */
+  .tour-step { display: flex; align-items: center; }
+  .tour-text { position: static; }
+}
+@media (max-width: 63.99rem) and (max-height: 32.5rem) and (orientation: portrait) {
+  .tour-side { position: static; margin-top: 0; padding-top: var(--space-md); border-bottom: 0; }
+  .tour-side::before { display: none; }
+  .tour-text { position: static; }
+  .tour { --ph: 280px; } /* 129px wide, 145px with its frame: it fits a 180px screen */
+}
+
+@media (min-width: 40rem) {
+  .tour-chip { padding-inline: var(--space-sm); }
+  .tour-chips { gap: var(--space-xs); }
+}
+
+/* laptops: the steps on the left, the phone on the right and bigger (up to 640px of screen), sticking at the top of its column */
+@media (min-width: 64rem) {
+  .tour { --bezel: var(--space-sm); --stick-top: 0px; --chips-h: 32px; --chips-block: calc(var(--chips-h) + var(--space-sm)); --ph: min(640px, max(360px, min(calc(100svh - 216px), calc(80svh - 76px)))); --step-h: 60svh; } /* 80svh - 76px: the whole phone is on screen when the first step rests in the middle, before the phone has stuck */
+  .tour .tour-top { padding-block: var(--space-3xl) var(--space-xl); }
+  .tour-grid { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); column-gap: var(--gap-columns); align-items: start; }
+  .tour-steps { grid-column: 1; grid-row: 1; padding-bottom: 25svh; } /* the phone is held still a little longer on the owner's screen */
+  .tour-side { grid-column: 2; grid-row: 1; top: var(--space-3xl); z-index: var(--z-raised); gap: var(--space-sm); margin-top: 0; padding: 0; background: none; border-bottom: 0; }
+  .tour-side::before { display: none; }
+  .tour-chips { gap: var(--space-xs); }
+  .tour-chip { padding-block: var(--space-2xs); font-size: var(--text-sm); }
+  .tour-step { display: flex; align-items: center; }
+  .tour-text { position: static; }
+  .tour-step h3 { font-size: var(--text-3xl); }
+  .tour-copy { font-size: var(--text-lg); }
+  .tour .tour-more { padding-block: var(--space-xl) var(--space-3xl); }
+}
+
+@media (prefers-reduced-motion: reduce) { .tour * { transition: none !important; animation: none !important; } }

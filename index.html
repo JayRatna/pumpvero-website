@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PumpVero: petrol pump app for daily sale, cash and credit</title>
+<meta name="description" content="PumpVero is a petrol pump app. Staff enter the readings and the money, and you see yesterday's sale by breakfast. Book a demo on WhatsApp.">
+<link rel="canonical" href="https://www.pumpvero.com/">
+<meta property="og:title" content="PumpVero: petrol pump app for daily sale, cash and credit">
+<meta property="og:description" content="PumpVero is a petrol pump app. Staff enter the readings and the money, and you see yesterday's sale by breakfast. Book a demo on WhatsApp.">
+<meta name="theme-color" content="#0D1013">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='7 7 86 86'%3E%3Cstyle%3E.f%7Bfill:%230D1013%7D@media (prefers-color-scheme:dark)%7B.f%7Bfill:%23ECEFF2%7D%7D%3C/style%3E%3Cpath class='f' d='M7 7H93V93H7Z M21 15V21H15V79H21V85H79V79H85V21H79V15Z'/%3E%3Cpolygon class='f' points='22,27 36,27 48,72 34,72'/%3E%3Cpolygon class='f' points='78,27 64,27 52,72 66,72'/%3E%3Cpolygon fill='%23D2A24C' points='29.5,42 36.5,42 40.5,57 33.5,57'/%3E%3Cpolygon fill='%23D2A24C' points='70.5,42 63.5,42 59.5,57 66.5,57'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/host-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/archivo-wordmark.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="img/screens/07-owner-home-720.webp" imagesrcset="img/screens/07-owner-home-360.webp 360w, img/screens/07-owner-home-720.webp 720w" imagesizes="(min-width: 48rem) 32vw, 62vw" media="(max-width: 63.99rem)" fetchpriority="high">
+<link rel="preload" href="css/tokens.css" as="style">
+<link rel="preload" href="css/base.css" as="style">
+<script>if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("js");addEventListener("load",function(){if(!window.pvSite||!window.pvBoard||!window.pvTour)document.documentElement.classList.remove("js")})</script>
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/overview.css" media="(min-width:64rem)">
+<link rel="stylesheet" href="css/tour.css">
+<script src="vendor/gsap/gsap.min.js" defer></script>
+<script src="vendor/gsap/ScrollTrigger.min.js" defer></script>
+<script src="js/site.js" defer></script>
+<script src="js/overview.js" defer></script>
+<script src="js/tour.js" defer></script>
+</head>
+<body>
+
+<div id="intro" class="intro" aria-hidden="true">
+  <div class="intro-bg"></div>
+  <div class="intro-logo">
+    <i class="intro-glow"></i>
+    <svg viewBox="7 7 86 86">
+      <path class="in-frame" d="M7 7H93V93H7Z M21 15V21H15V79H21V85H79V79H85V21H79V15Z" fill="currentColor"></path>
+      <polygon class="in-arm" points="22,27 36,27 48,72 34,72" fill="currentColor"></polygon>
+      <polygon class="in-arm" points="78,27 64,27 52,72 66,72" fill="currentColor"></polygon>
+      <polygon class="in-bar lg-a" points="29.5,42 36.5,42 40.5,57 33.5,57"></polygon>
+      <polygon class="in-bar lg-a" points="70.5,42 63.5,42 59.5,57 66.5,57"></polygon>
+    </svg>
+    <span class="in-word wordmark">PumpVero</span>
+  </div>
+</div>
+<script>if(performance.now()>900)document.documentElement.classList.add("no-intro")</script>
+
+<div class="spine" aria-hidden="true"><i></i></div>
+
+<header class="site-header">
+  <div class="container">
+    <nav class="pill" aria-label="Main">
+      <a class="brand" href="#top">
+        <svg viewBox="7 7 86 86" aria-hidden="true">
+          <path d="M7 7H93V93H7Z M21 15V21H15V79H21V85H79V79H85V21H79V15Z" fill="currentColor"></path>
+          <polygon points="22,27 36,27 48,72 34,72" fill="currentColor"></polygon>
+          <polygon points="78,27 64,27 52,72 66,72" fill="currentColor"></polygon>
+          <polygon class="lg-a" points="29.5,42 36.5,42 40.5,57 33.5,57"></polygon>
+          <polygon class="lg-a" points="70.5,42 63.5,42 59.5,57 66.5,57"></polygon>
+        </svg>
+        <span class="wordmark">PumpVero</span>
+      </a>
+      <div class="pill-end">
+        <a class="nav-link" href="https://app.pumpvero.com">Sign in</a>
+        <a class="btn btn--out" href="https://wa.me/919561166965?text=Hi%2C%20I%27d%20like%20a%20PumpVero%20demo." target="_blank" rel="noopener noreferrer">Book a demo on WhatsApp</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero" aria-labelledby="hero-h">
+  <div class="container">
+    <div class="opener">
+      <h1 id="hero-h" class="display">Say goodbye to registers once the figures match.</h1>
+      <div class="opener-act">
+        <p class="lead">PumpVero is an app for your pump: staff enter the readings and the cash, and you see the day. Keep your registers at first, and check PumpVero against them.</p>
+        <p class="status">Live at petrol pumps in India.</p>
+        <div class="opener-cta">
+          <a class="btn" href="https://wa.me/919561166965?text=Hi%2C%20I%27d%20like%20a%20PumpVero%20demo." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Book a demo on WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <figure class="ovb" data-slot="owner" data-kind="product" data-ov="f">
+        <span class="ovb-chip">Sample data</span>
+        <div class="ovb-win" role="img" aria-label="Sample owner's home screen with invented figures" tabindex="0">
+        <div class="ovb-scale" aria-hidden="true">
+          <div class="ovb-frame">
+            <div class="ovb-app">
+              <div class="ovb-side">
+                <div class="ovb-brand">
+                  <svg viewBox="7 7 86 86" width="34" height="34">
+                    <path d="M7 7H93V93H7Z M21 15V21H15V79H21V85H79V79H85V21H79V15Z" fill="currentColor"></path>
+                    <polygon points="22,27 36,27 48,72 34,72" fill="currentColor"></polygon>
+                    <polygon points="78,27 64,27 52,72 66,72" fill="currentColor"></polygon>
+                    <polygon class="lg-a" points="29.5,42 36.5,42 40.5,57 33.5,57"></polygon>
+                    <polygon class="lg-a" points="70.5,42 63.5,42 59.5,57 66.5,57"></polygon>
+                  </svg>
+                  <span class="ovb-brand-name">PumpVero</span>
+                </div>
+                <div class="ovb-nav">
+                  <span class="ovb-nav-i on" data-ov="n"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg>Overview</span>
+                  <span class="ovb-nav-i" data-ov="n"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>Business day</span>
+                  <span class="ovb-nav-i" data-ov="n"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h11v10H2zM13 10h4l3 3v3h-7"></path><circle cx="6" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg>Tanks &amp; receipts</span>
+                  <span class="ovb-nav-i" data-ov="n"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2"></rect><path d="M3.5 10h17M7.5 15h4"></path></svg>Credit ledger</span>
+                  <span class="ovb-nav-i" data-ov="n"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17H6z"></path><path d="M9.5 16v-3M12 16V9M14.5 16v-5"></path></svg>Daily sales report</span>
+                </div>
+              </div>
+
+              <div class="ovb-main">
+
+                <div class="ovb-head">
+                  <div class="ovb-hl" data-ov="r">
+                    <p class="ovb-date">Thu 29 Oct 2026 · business day started 06:00</p>
+                    <p class="ovb-h1">Overview</p>
+                  </div>
+                  <div class="ovb-rates" data-ov="r">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path></svg>
+                    <span class="ovb-mute">Today's locked rates</span>
+                    <span class="ovb-b">MS ₹104.42</span>
+                    <span class="ovb-sep">·</span>
+                    <span class="ovb-b">HSD ₹90.95</span>
+                  </div>
+                </div>
+
+                <div class="ovb-sec">
+                  <div class="ovb-sec-h">
+                    <p class="ovb-h2">Needs your attention</p>
+                    <span class="ovb-badge" data-ov="p">3</span>
+                  </div>
+                  <div class="ovb-list">
+                    <div class="ovb-item" data-ov="r">
+                      <span class="ovb-tile amb" data-ov="p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 7.5-2"></path></svg></span>
+                      <div class="ovb-txt">
+                        <p class="ovb-t">Yesterday's business day is still open</p>
+                        <p class="ovb-s">All 3 shifts are approved and every payment is verified, but the day isn't locked. Yesterday's numbers below are provisional until it is.</p>
+                      </div>
+                      <span class="ovb-btn">Open business day</span>
+                    </div>
+                    <div class="ovb-item" data-ov="r">
+                      <span class="ovb-tile red" data-ov="p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l9 16.5H3z"></path><path d="M12 10v4.5M12 17.5v.01"></path></svg></span>
+                      <div class="ovb-txt">
+                        <p class="ovb-t">Attendant B's shift on 28 Oct is ₹339.65 short</p>
+                        <p class="ovb-s">Reconciled by the Assistant Manager at 06:48. No note from the manager yet.</p>
+                      </div>
+                      <span class="ovb-btn">Review shift</span>
+                    </div>
+                    <div class="ovb-item" data-ov="r">
+                      <span class="ovb-tile amb" data-ov="p"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h11v10H2zM13 10h4l3 3v3h-7"></path><circle cx="6" cy="18" r="2"></circle><circle cx="17" cy="18" r="2"></circle></svg></span>
+                      <div class="ovb-txt">
+                        <p class="ovb-t">Diesel tanker into T2 came in 46 L under invoice</p>
+                        <p class="ovb-s">Inv. 000001254 · 12,000 L invoiced, 11,954 L by dip. Not reviewed yet.</p>
+                      </div>
+                      <span class="ovb-btn">View receipt</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ovb-sec lg">
+                  <div class="ovb-yh" data-ov="r">
+                    <div class="ovb-yl">
+                      <p class="ovb-h2 xl">Yesterday</p>
+                      <span class="ovb-sub">Wed 28 Oct · 06:00 → 06:00</span>
+                      <span class="ovb-pill">Not locked</span>
+                    </div>
+                    <span class="ovb-link">Daily sales report
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+                    </span>
+                  </div>
+
+                  <div class="ovb-stats">
+                    <div class="ovb-card" data-ov="r">
+                      <p class="ovb-lab">Sales by meter</p>
+                      <p class="ovb-val">₹5,22,642</p>
+                      <p class="ovb-lab"><span class="nb">3 shifts ·</span> at day's locked rates</p>
+                    </div>
+                    <div class="ovb-card" data-ov="r">
+                      <p class="ovb-lab">Fuel sold</p>
+                      <p class="ovb-val">5,454 L</p>
+                      <p class="ovb-lab"><abbr>MS</abbr> 1,976 L · <abbr>HSD</abbr> 3,478 L</p>
+                    </div>
+                    <div class="ovb-card" data-ov="r">
+                      <p class="ovb-lab">Money received</p>
+                      <p class="ovb-val">₹5,01,902</p>
+                      <p class="ovb-lab"><span class="nb">+ ₹14,500</span> on <span class="nb">credit ·</span> <span class="nb">₹5,900</span> expenses</p>
+                    </div>
+                    <div class="ovb-card" data-ov="r">
+                      <p class="ovb-lab">Cash difference</p>
+                      <p class="ovb-val neg">−₹339.65</p>
+                      <p class="ovb-lab"><span class="nb">Attendant B −₹339.65 ·</span> <span class="nb">others ₹0</span></p>
+                    </div>
+                  </div>
+
+                  <div class="ovb-two">
+                    <div class="ovb-card2" data-ov="r">
+                      <div class="ovb-ch">
+                        <p class="ovb-ct">Where yesterday's ₹5,22,642 went</p>
+                        <p class="ovb-lab">Bars show share of sales by meter</p>
+                      </div>
+                      <div class="ovb-grp">
+                        <p class="ovb-cap">Received · ₹5,01,902</p>
+                        <div class="ovb-line"><span>Cash</span><span class="ovb-track"><span class="ovb-fill w374" data-ov="x"></span></span><span class="ovb-amt">₹1,95,430 <span class="ovb-pc">37.4%</span></span></div>
+                        <div class="ovb-line"><span>UPI</span><span class="ovb-track"><span class="ovb-fill w392" data-ov="x"></span></span><span class="ovb-amt">₹2,04,860 <span class="ovb-pc">39.2%</span></span></div>
+                        <div class="ovb-line"><span>Card</span><span class="ovb-track"><span class="ovb-fill w81" data-ov="x"></span></span><span class="ovb-amt">₹42,160 <span class="ovb-pc">8.1%</span></span></div>
+                        <div class="ovb-line"><span>CCMS (fleet)</span><span class="ovb-track"><span class="ovb-fill w89" data-ov="x"></span></span><span class="ovb-amt">₹46,452 <span class="ovb-pc">8.9%</span></span></div>
+                        <div class="ovb-line"><span>Bank transfer</span><span class="ovb-track"><span class="ovb-fill w25" data-ov="x"></span></span><span class="ovb-amt">₹13,000 <span class="ovb-pc">2.5%</span></span></div>
+                      </div>
+                      <div class="ovb-grp ovb-split">
+                        <p class="ovb-cap">Not received in cash or bank · ₹20,740</p>
+                        <div class="ovb-line"><span>Credit sales</span><span class="ovb-track"><span class="ovb-fill amb w28" data-ov="x"></span></span><span class="ovb-amt">₹14,500 <span class="ovb-pc">2.8%</span></span></div>
+                        <div class="ovb-line"><span>Expenses</span><span class="ovb-track"><span class="ovb-fill gry w11" data-ov="x"></span></span><span class="ovb-amt">₹5,900 <span class="ovb-pc">1.1%</span></span></div>
+                        <div class="ovb-line"><span>Short</span><span class="ovb-track"><span class="ovb-fill red w04" data-ov="x"></span></span><span class="ovb-amt neg">₹339.65 <span class="ovb-pc">0.1%</span></span></div>
+                      </div>
+                    </div>
+
+                    <div class="ovb-card2" data-ov="r">
+                      <div class="ovb-chh">
+                        <div class="ovb-ch">
+                          <p class="ovb-ct">Litres sold, last 7 business days</p>
+                          <p class="ovb-lab">After testing litres</p>
+                        </div>
+                        <div class="ovb-legend">
+                          <span class="ovb-lg"><span class="ovb-sw"></span>Petrol (MS)</span>
+                          <span class="ovb-lg"><span class="ovb-sw amb"></span>Diesel (HSD)</span>
+                        </div>
+                      </div>
+                      <div class="ovb-chart">
+                        <div class="ovb-plot">
+                          <span class="ovb-gl g5"></span>
+                          <span class="ovb-gl g25"></span>
+                          <span class="ovb-ax a5">5,000</span>
+                          <span class="ovb-ax a25">2,500</span>
+                          <div class="ovb-col"><span class="ovb-tot">5,142</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h108"></div><div class="ovb-ms h65"></div></div></div>
+                          <div class="ovb-col"><span class="ovb-tot">5,440</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h118"></div><div class="ovb-ms h65"></div></div></div>
+                          <div class="ovb-col"><span class="ovb-tot">5,402</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h116"></div><div class="ovb-ms h66"></div></div></div>
+                          <div class="ovb-col"><span class="ovb-tot">5,186</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h107"></div><div class="ovb-ms h67"></div></div></div>
+                          <div class="ovb-col"><span class="ovb-tot">5,318</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h114"></div><div class="ovb-ms h65"></div></div></div>
+                          <div class="ovb-col"><span class="ovb-tot">5,346</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h113"></div><div class="ovb-ms h67"></div></div></div>
+                          <div class="ovb-col cur"><span class="ovb-tot">5,454</span><div class="ovb-stack" data-ov="y"><div class="ovb-hsd h116"></div><div class="ovb-ms h67"></div></div></div>
+                        </div>
+                        <div class="ovb-xl"><span>Thu 22</span><span>Fri 23</span><span>Sat 24</span><span>Sun 25</span><span>Mon 26</span><span>Tue 27</span><span class="cur">Wed 28</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ovb-sec lg">
+                  <div class="ovb-yl" data-ov="r">
+                    <p class="ovb-h2 xl">Today so far</p>
+                    <span class="ovb-sub">Thu 29 Oct · since 06:00</span>
+                  </div>
+
+                  <div class="ovb-three">
+                    <div class="ovb-card2 gap16" data-ov="r">
+                      <p class="ovb-ct">Shifts</p>
+                      <div class="ovb-shifts">
+                        <div class="ovb-strip">
+                          <div class="ovb-seg run"><div class="ovb-fill w68" data-ov="x"></div></div>
+                          <div class="ovb-seg"></div>
+                        </div>
+                        <div class="ovb-strip lbl"><span>Day 08:00</span><span>Night 20:00</span></div>
+                      </div>
+                      <div class="ovb-stk">
+                        <p class="ovb-t">The day shift is running</p>
+                        <p class="ovb-s">Attendant A, Attendant B and Attendant C on 5 nozzles. Sales show up when meter readings come in at 20:00.</p>
+                      </div>
+                    </div>
+
+                    <div class="ovb-card2 gap16" data-ov="r">
+                      <p class="ovb-ct">Credit repayments</p>
+                      <div class="ovb-pair">
+                        <div class="ovb-stk"><p class="ovb-lab">Yesterday</p><p class="ovb-big">₹22,000</p></div>
+                        <div class="ovb-stk"><p class="ovb-lab">Today so far</p><p class="ovb-big">₹8,500</p></div>
+                      </div>
+                      <div class="ovb-foot">
+                        <p class="ovb-lab">Outstanding <span class="ovb-b dk">₹3,42,600</span> across 18 accounts</p>
+                        <span class="ovb-link">Credit ledger</span>
+                      </div>
+                    </div>
+
+                    <div class="ovb-card2 gap14" data-ov="r">
+                      <div class="ovb-tankh">
+                        <p class="ovb-ct">Tank stock</p>
+                        <span class="ovb-note">Morning dip · 06:12</span>
+                      </div>
+                      <div class="ovb-tank">
+                        <div class="ovb-tl"><span><span class="ovb-mono">T1</span> Petrol (MS)</span><span><span class="ovb-b">6,820</span> <span class="ovb-mute">/ 15,000 L</span></span></div>
+                        <div class="ovb-track"><div class="ovb-fill w45" data-ov="x"></div></div>
+                      </div>
+                      <div class="ovb-tank">
+                        <div class="ovb-tl"><span><span class="ovb-mono">T2</span> Diesel (HSD)</span><span><span class="ovb-b">15,240</span> <span class="ovb-mute">/ 20,000 L</span></span></div>
+                        <div class="ovb-track"><div class="ovb-fill amb w76" data-ov="x"></div></div>
+                      </div>
+                      <div class="ovb-tank">
+                        <div class="ovb-tl"><span><span class="ovb-mono">T3</span> Diesel (HSD)</span><span><span class="ovb-b">5,210</span> <span class="ovb-mute">/ 15,000 L</span></span></div>
+                        <div class="ovb-track"><div class="ovb-fill amb w35" data-ov="x"></div></div>
+                      </div>
+                      <span class="ovb-link">Tanks &amp; receipts</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </figure>
+
+      <div class="tour-phone hero-phone" role="img" aria-label="Owner's home screen: what needs attention today and yesterday's fuel sales, sample data">
+        <span class="tour-tab">Sample data</span>
+        <div class="tour-view">
+          <div class="tour-screen is-active" data-shot="07-owner-home">
+            <img src="img/screens/07-owner-home-720.webp" srcset="img/screens/07-owner-home-360.webp 360w, img/screens/07-owner-home-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Owner's home screen: what needs attention today and yesterday's fuel sales, sample data" loading="eager" decoding="async" fetchpriority="high">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem" aria-labelledby="problem-h">
+  <div class="container problem-pin">
+    <div class="split">
+      <h2 id="problem-h">Your attendant knows the meter readings first.</h2>
+      <div class="thread">
+        <p class="thread-who">Manager</p>
+        <ol class="thread-msgs">
+          <li>Today's sale?<time datetime="20:10">8:10 pm</time></li>
+          <li>Was any shift short on cash?<time datetime="20:45">8:45 pm</time></li>
+          <li>Has the transporter paid yet?<time datetime="21:30">9:30 pm</time></li>
+          <li>Where is yesterday's money?<time datetime="07:05">7:05 am</time></li>
+        </ol>
+      </div>
+      <p class="problem-line">You hear them last, when the manager calls back.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tour" id="app" aria-labelledby="tour-h">
+  <div class="container tour-top">
+    <div class="head">
+      <h2 id="tour-h">Each person does their own part.</h2>
+      <p class="sub">Follow one pump day, from the nozzles to your screen.</p>
+    </div>
+  </div>
+
+  <div class="container tour-grid">
+    <div class="tour-side" data-pv-phone>
+      <nav class="tour-chips" aria-label="Jump to a role">
+        <a class="tour-chip is-on" href="#role-attendant" aria-current="true">Attendant</a>
+        <a class="tour-chip" href="#role-assistant-manager">Assistant Manager</a>
+        <a class="tour-chip" href="#role-manager">Manager</a>
+        <a class="tour-chip" href="#role-owner">Owner</a>
+      </nav>
+      <div class="tour-phone" aria-hidden="true">
+        <span class="tour-tab">Sample data</span>
+        <div class="tour-view">
+          <div class="tour-screen is-active" data-shot="01-start-shift">
+            <img src="img/screens/01-start-shift-720.webp" srcset="img/screens/01-start-shift-360.webp 360w, img/screens/01-start-shift-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Attendant's screen: picking nozzles to start a shift, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="02-closing-readings">
+            <img src="img/screens/02-closing-readings-720.webp" srcset="img/screens/02-closing-readings-360.webp 360w, img/screens/02-closing-readings-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Attendant's screen: closing meter readings and testing litres, with the litres sold worked out, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="03-reconcile-shift">
+            <img src="img/screens/03-reconcile-shift-720.webp" srcset="img/screens/03-reconcile-shift-360.webp 360w, img/screens/03-reconcile-shift-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Assistant Manager's screen: the shift's money counted, showing the cash short, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="04-approve-and-lock">
+            <img src="img/screens/04-approve-and-lock-720.webp" srcset="img/screens/04-approve-and-lock-360.webp 360w, img/screens/04-approve-and-lock-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Manager's screen: shifts waiting for approval and the step to lock the day, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="05-dip-and-density">
+            <img src="img/screens/05-dip-and-density-720.webp" srcset="img/screens/05-dip-and-density-360.webp 360w, img/screens/05-dip-and-density-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Tank record: dip, water dip, hydrometer and temperature, with the stock and density worked out, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen tour-seq" data-shot="06a-scan-invoice-qr">
+            <img class="seq" src="img/screens/06-0-add-tanker-start-720.webp" srcset="img/screens/06-0-add-tanker-start-360.webp 360w, img/screens/06-0-add-tanker-start-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Tanker entry: the start screen with the Scan invoice QR button, sample data" loading="lazy" decoding="async" fetchpriority="low">
+            <img class="seq" src="img/screens/06-1-scan-camera-720.webp" srcset="img/screens/06-1-scan-camera-360.webp 360w, img/screens/06-1-scan-camera-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Tanker entry: the QR scanner, ready to read the invoice QR" loading="lazy" decoding="async" fetchpriority="low">
+            <img src="img/screens/06a-scan-invoice-qr-720.webp" srcset="img/screens/06a-scan-invoice-qr-360.webp 360w, img/screens/06a-scan-invoice-qr-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Tanker entry: the invoice details read from the invoice QR, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="06-tanker-receipt">
+            <img src="img/screens/06-tanker-receipt-720.webp" srcset="img/screens/06-tanker-receipt-360.webp 360w, img/screens/06-tanker-receipt-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Tanker entry: invoice litres against litres by dip, showing the difference, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+          <div class="tour-screen" data-shot="07-owner-home">
+            <img src="img/screens/07-owner-home-720.webp" srcset="img/screens/07-owner-home-360.webp 360w, img/screens/07-owner-home-720.webp 720w" sizes="(min-width: 64rem) 300px, (min-width: 48rem) 32vw, 62vw" width="720" height="1560" alt="Owner's home screen: what needs attention today and yesterday's fuel sales, sample data" loading="lazy" decoding="async" fetchpriority="low">
+          </div>
+        </div>
+      </div>
+      <p class="tour-count" aria-hidden="true"><span class="tour-num">01</span> / 08</p>
+    </div>
+
+    <ol class="tour-steps">
+      <li class="tour-step is-active" id="role-attendant" data-pv-step data-chip="0">
+        <div class="tour-text">
+          <p class="tour-label">Attendant</p>
+          <h3>Start the shift</h3>
+          <p class="tour-copy">The attendant picks the nozzles, and the opening readings fill in by themselves and cannot be changed.</p>
+        </div>
+      </li>
+      <li class="tour-step" data-pv-step data-chip="0">
+        <div class="tour-text">
+          <p class="tour-label">Attendant</p>
+          <h3>Closing readings</h3>
+          <p class="tour-copy">The attendant types the closing meter readings and testing litres, and the app works out the litres sold.</p>
+        </div>
+      </li>
+      <li class="tour-step" id="role-assistant-manager" data-pv-step data-chip="1">
+        <div class="tour-text">
+          <p class="tour-label">Assistant Manager</p>
+          <h3>Count the cash</h3>
+          <p class="tour-copy">The Assistant Manager counts the cash and enters UPI, card and bank payments, and the app shows Balanced, Shortage or Excess.</p>
+        </div>
+      </li>
+      <li class="tour-step" id="role-manager" data-pv-step data-chip="2">
+        <div class="tour-text">
+          <p class="tour-label">Manager</p>
+          <h3>Approve and lock the day</h3>
+          <p class="tour-copy">The Manager approves or rejects each shift and locks the day, and then only you can open it again.</p>
+        </div>
+      </li>
+      <li class="tour-step" data-pv-step data-chip="2">
+        <div class="tour-text">
+          <p class="tour-label">Manager</p>
+          <h3>Dip and density</h3>
+          <p class="tour-copy">The Manager types the dip, hydrometer reading and temperature, and the app works out the litres from the tank's dip chart and the density at 15 °C.</p>
+        </div>
+      </li>
+      <li class="tour-step" data-pv-step data-chip="2">
+        <div class="tour-text">
+          <p class="tour-label">Manager</p>
+          <h3>Scan the tanker invoice</h3>
+          <p class="tour-copy">The Manager scans the invoice QR, and the app fills in the invoice number, date, lorry, litres and total.</p>
+        </div>
+      </li>
+      <li class="tour-step" data-pv-step data-chip="2">
+        <div class="tour-text">
+          <p class="tour-label">Manager</p>
+          <h3>Check the tanker</h3>
+          <p class="tour-copy">With a dip before and after unloading, the app checks the litres against the invoice.</p>
+        </div>
+      </li>
+      <li class="tour-step" id="role-owner" data-pv-step data-chip="3">
+        <div class="tour-text">
+          <p class="tour-label">Owner</p>
+          <h3>Yesterday's sale by breakfast</h3>
+          <p class="tour-copy">Each morning you see yesterday's fuel sales, and today's sale as each shift ends.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="container tour-more">
+    <ul class="panels">
+      <li>
+        <h3>Who owes you</h3>
+        <p>Credit customers have limits and a last-paid date, and the app shows who is overdue.</p>
+      </li>
+      <li>
+        <i class="seam seam-h" aria-hidden="true"></i><i class="seam seam-v" aria-hidden="true"></i>
+        <h3>Each day keeps its own fuel rates</h3>
+        <p>A new petrol or diesel price does not change earlier days.</p>
+      </li>
+      <li>
+        <i class="seam seam-h" aria-hidden="true"></i>
+        <h3>Your own data</h3>
+        <p>Your data is kept separate from other pump businesses.</p>
+      </li>
+      <li>
+        <i class="seam seam-h" aria-hidden="true"></i><i class="seam seam-v" aria-hidden="true"></i>
+        <h3>Who changed what</h3>
+        <p>After a shift is submitted, the attendant cannot edit it, and every correction is saved with the name of the person who made it.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta" aria-labelledby="cta-h">
+  <div class="container section">
+    <div class="split">
+      <h2 id="cta-h" class="close-h">We will answer your questions in a demo.</h2>
+      <div class="close-act">
+        <p class="close-who">Jay, the founder, replies himself.</p>
+        <p class="sub">The button opens WhatsApp with a message already typed.</p>
+        <p><a class="btn" href="https://wa.me/919561166965?text=Hi%2C%20I%27d%20like%20a%20PumpVero%20demo." target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Book a demo on WhatsApp</a></p>
+        <p class="email">Or email <a href="mailto:jayratnajagdale@pumpvero.com">jayratnajagdale@pumpvero.com</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container foot">
+    <div class="foot-brand">
+      <svg viewBox="7 7 86 86" aria-hidden="true">
+        <path d="M7 7H93V93H7Z M21 15V21H15V79H21V85H79V79H85V21H79V15Z" fill="currentColor"></path>
+        <polygon points="22,27 36,27 48,72 34,72" fill="currentColor"></polygon>
+        <polygon points="78,27 64,27 52,72 66,72" fill="currentColor"></polygon>
+        <polygon class="lg-a" points="29.5,42 36.5,42 40.5,57 33.5,57"></polygon>
+        <polygon class="lg-a" points="70.5,42 63.5,42 59.5,57 66.5,57"></polygon>
+      </svg>
+      <span class="wordmark">PumpVero</span>
+    </div>
+    <div class="foot-row">
+      <div class="foot-links">
+        <a class="nav-link" href="https://app.pumpvero.com">Sign in</a>
+        <a class="nav-link" href="mailto:jayratnajagdale@pumpvero.com">jayratnajagdale@pumpvero.com</a>
+      </div>
+      <div class="privacy">
+        <p>This site does not use cookies or analytics.</p>
+        <p>Like every website host, GitHub keeps a security log of visits.</p>
+      </div>
+    </div>
+  </div>
+  <div class="sticky-bar" id="sticky">
+    <a class="btn" href="https://wa.me/919561166965?text=Hi%2C%20I%27d%20like%20a%20PumpVero%20demo." target="_blank" rel="noopener noreferrer">Book a demo on WhatsApp</a>
+  </div>
+</footer>
+
+</body>
+</html>

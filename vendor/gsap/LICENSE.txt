@@ -1,0 +1,7 @@
+GSAP standard no-charge license (https://gsap.com/standard-license), from the package README:
+Ask in the friendly <a href="https://gsap.com/community/">GSAP forums</a>. Or share your knowledge and help someone else - it's a great way to sharpen your skills! Report any bugs there too (or <a href="https://github.com/greensock/GSAP/issues">file an issue here</a> if you prefer).
+
+### License
+GreenSock's standard "no charge" license can be viewed at <a href="https://gsap.com/standard-license">https://gsap.com/standard-license</a>.
+
+Copyright (c) 2008-2025, GreenSock. All rights reserved.

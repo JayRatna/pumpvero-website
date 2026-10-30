@@ -1,0 +1,8 @@
+.handoff/
+.claude/
+node_modules/
+.env*
+*.local.*
+.impeccable/
+.agents/
+checks/
